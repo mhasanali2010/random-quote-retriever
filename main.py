@@ -26,13 +26,13 @@ json_file = "quotes.json"
 if data_retrieved:
     logging.info(f"Data Retrieved Successfully {response.status_code}")
     data = response.json()
-    quote = data[0]["q"]
+    raw_quote = data[0]["q"]
     author = data[0]["a"]
-    quote = f"\"{quote}\"\n-{author}"
+    quote = f"\"{raw_quote}\"\n-{author}"
     print(quote)
 
     if save:
-        quote_dict = {"author": author, "quote": quote}
+        quote_dict = {"author": author, "quote": raw_quote}
 
         if os.path.exists(json_file) and os.path.getsize(json_file) > 0:
             with open(json_file, "r") as f:
