@@ -56,7 +56,7 @@ def main() -> None:
 
         json_file = "quotes.json"
 
-        if not save:
+        if not save and not view:
             if data_retrieved:
                 logging.info(f"Data Retrieved Successfully {response.status_code}")
                 data = response.json()
