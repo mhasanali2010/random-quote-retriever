@@ -38,6 +38,12 @@ Run the script with --save:
 python3 main.py --save
 ```
 The last quote that was retrieved will be saved in `./quotes.json`
+## Viewing Saved Quotes
+Run the script with --view-saved:
+```
+python3 main.py --view-saved
+```
+All of the quotes that have been saved in `./quotes.json` will be displayed.
 
 ## Notes
 - Tested only using `Python 3.13`
