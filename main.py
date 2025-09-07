@@ -23,29 +23,24 @@ data_retrieved = response.status_code == 200
 
 json_file = "quotes.json"
 
-if data_retrieved:
-    logging.info(f"Data Retrieved Successfully {response.status_code}")
-    data = response.json()
-    raw_quote = data[0]["q"]
-    author = data[0]["a"]
-    quote = f"\"{raw_quote}\"\n-{author}"
-    print(quote)
+if not save:
+    if data_retrieved:
+        logging.info(f"Data Retrieved Successfully {response.status_code}")
+        data = response.json()
+        raw_quote = data[0]["q"]
+        author = data[0]["a"]
+        quote = f"\"{raw_quote}\"\n-{author}"
+        print(quote)
 
-    if save:
         quote_dict = {"author": author, "quote": raw_quote}
-
-        if os.path.exists(json_file) and os.path.getsize(json_file) > 0:
-            with open(json_file, "r") as f:
-                quotes = json.load(f)
-        else:
-            quotes = []
-
-        quotes.append(quote_dict)
-
-        with open(json_file, "w") as f:
-            json.dump(quotes, f, indent=4)
-
-        logging.info("Saved Quote Successfully")
-else:
-    logging.error(f"Data Not Retrieved {response.status_code}")
-    print("Data Not Retrieved")
+        with open("last_quote.json", "w") as f:
+            json.dump(quote_dict, f, indent=4)
+    else:
+        logging.error(f"Data Not Retrieved {response.status_code}")
+        print("Data Not Retrieved")
+if save:
+    if os.path.exists("last_quote.json") and os.path.getsize("last_quote.json") > 0:
+        with open("last_quote.json", "r") as f:
+            file = json.load(f)
+        with open(json_file, "a") as f:
+            json.dump(file, f, indent=4)
