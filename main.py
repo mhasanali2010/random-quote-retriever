@@ -6,21 +6,24 @@ import os
 from typing import Any
 
 
-def __init__() -> None:
-    """Initizalize the Argument Parser"""
-    parser = argparse.ArgumentParser(description='finds a random quote')
-    parser.add_argument("--save", action="store_true", help="save the quote to file")
-    args = parser.parse_args()
-
-    global save
-    save = args.save
-
+def initialize_logging() -> None:
+    """Initialize Logging"""
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s - %(levelname)s - %(message)s",
         filename="logs.log",
         filemode="a"
     )
+
+
+def initialize_argument_parser() -> bool:
+    """Initizalize the Argument Parser"""
+    parser = argparse.ArgumentParser(description='finds a random quote')
+    parser.add_argument("--save", action="store_true", help="save the quote to file")
+    args = parser.parse_args()
+
+    save = args.save
+    return save
 
 
 def check_file_existence(file_path: str) -> bool:
@@ -43,7 +46,8 @@ def write_to_json(file_path: str, data: Any) -> None:
 
 def main() -> None:
     try:
-        __init__()
+        initialize_logging()
+        save = initialize_argument_parser()
         base_url = "https://zenquotes.io/api/random"
         response = requests.get(base_url)
         data_retrieved = response.status_code == 200
