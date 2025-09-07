@@ -3,23 +3,47 @@ import logging
 import argparse
 import json
 import os
+from typing import Any
 
-parser = argparse.ArgumentParser(description='finds a random quote')
-parser.add_argument("--save", action="store_true", help="save the quote to file")
-args = parser.parse_args()
 
-save = args.save
+def __init__() -> None:
+    """Initizalize the Argument Parser"""
+    parser = argparse.ArgumentParser(description='finds a random quote')
+    parser.add_argument("--save", action="store_true", help="save the quote to file")
+    args = parser.parse_args()
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    filename="logs.log",
-    filemode="a"
-)
+    global save
+    save = args.save
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+        filename="logs.log",
+        filemode="a"
+    )
+
+
+def check_file_existence(file_path: str) -> bool:
+    """Check whether a file exists and if it is not empty"""
+    return os.path.exists(file_path) and os.path.getsize(file_path) > 0
+
+
+def load_from_json(file_path: str) -> Any:
+    """Load data from JSON file"""
+    with open(file_path, "r") as f:
+        data = json.load(f)
+        return data
+    
+
+def write_to_json(file_path: str, data: Any) -> None:
+    """Write data to JSON file"""
+    with open(file_path, "w") as f:
+        json.dump(data, f, indent=4)
 
 
 def main() -> None:
     try:
+        __init__()
         base_url = "https://zenquotes.io/api/random"
         response = requests.get(base_url)
         data_retrieved = response.status_code == 200
@@ -36,23 +60,19 @@ def main() -> None:
                 print(quote)
 
                 quote_dict = {"author": author, "quote": raw_quote}
-                with open("last_quote.json", "w") as f:
-                    json.dump(quote_dict, f, indent=4)
+                write_to_json("last_quote.json", quote_dict)
             else:
                 logging.error(f"Data Not Retrieved {response.status_code}")
                 print("Data Not Retrieved")
         if save:
-            if os.path.exists("last_quote.json") and os.path.getsize("last_quote.json") > 0:
-                with open("last_quote.json", "r") as f:
-                    file = json.load(f)
-                if os.path.exists(json_file) and os.path.getsize(json_file) > 0:
-                    with open(json_file, "r") as f:
-                        data = json.load(f)
+            if check_file_existence("last_quote.json"):
+                file = load_from_json("last_quote.json")
+                if check_file_existence(json_file):
+                    data = load_from_json(json_file)
                 else:
                     data = []
                 data.append(file)
-                with open(json_file, "w") as f:
-                    json.dump(data, f, indent=4)
+                write_to_json(json_file, data)
 
                 logging.info("Quote saved successfully")
                 print("Quote Saved")
