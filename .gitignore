@@ -9,3 +9,7 @@ venv/
 Thumbs.db
 desktop.ini
 *.json
+# Packaging
+/dist/
+/build/
+/*.egg-info/
