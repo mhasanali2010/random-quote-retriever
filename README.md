@@ -1,6 +1,7 @@
 # CLI Random Quote Retriever
 ## By mhasanali2010
-
+## PyPI Project Link
+https://pypi.org/project/random-quote-retriever/
 ## What it does?
 - Uses `zenquotes.io/api` to retrieve a random quote. Can optionally save the quote in `./quotes.json` if you like it
 - API handling using `requests` and argument parsing using `argparse`
