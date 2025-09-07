@@ -16,14 +16,14 @@ def initialize_logging() -> None:
     )
 
 
-def initialize_argument_parser() -> bool:
+def initialize_argument_parser() -> argparse.Namespace:
     """Initialize the Argument Parser"""
     parser = argparse.ArgumentParser(description='finds a random quote')
     parser.add_argument("--save", action="store_true", help="save the quote to file")
+    parser.add_argument("--view-saved", action="store_true", help="display saved quotes")
     args = parser.parse_args()
 
-    save = args.save
-    return save
+    return args
 
 
 def check_file_existence(file_path: str) -> bool:
@@ -47,7 +47,9 @@ def write_to_json(file_path: str, data: Any) -> None:
 def main() -> None:
     try:
         initialize_logging()
-        save = initialize_argument_parser()
+        args = initialize_argument_parser()
+        save = args.save
+        view = args.view_saved
         base_url = "https://zenquotes.io/api/random"
         response = requests.get(base_url)
         data_retrieved = response.status_code == 200
@@ -83,6 +85,11 @@ def main() -> None:
             else:
                 logging.error("Error while saving: last quote was not found")
                 print("Could not save quote as no quote was found.")
+        if view:
+            if check_file_existence(json_file):
+                data = load_from_json(json_file)
+                for each in data:
+                    print(f"\"{each["quote"]}\" -{each["author"]}")
     except Exception as e:
         logging.error(f"Error Occured: {e}")
         print("An error occured while retrieving, please try again later.")
