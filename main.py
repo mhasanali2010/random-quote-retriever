@@ -47,5 +47,17 @@ finally:
         if os.path.exists("last_quote.json") and os.path.getsize("last_quote.json") > 0:
             with open("last_quote.json", "r") as f:
                 file = json.load(f)
-            with open(json_file, "a") as f:
-                json.dump(file, f, indent=4)
+            if os.path.exists(json_file) and os.path.getsize(json_file) > 0:
+                with open(json_file, "r") as f:
+                    data = json.load(f)
+            else:
+                data = []
+            data.append(file)
+            with open(json_file, "w") as f:
+                json.dump(data, f, indent=4)
+
+            logging.info("Quote saved successfully")
+            print("Quote Saved")
+        else:
+            logging.error("Error while saving: last quote was not found")
+            print("Could not save quote as no quote was found.")
