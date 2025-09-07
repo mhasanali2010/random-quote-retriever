@@ -17,7 +17,7 @@ def initialize_logging() -> None:
 
 
 def initialize_argument_parser() -> bool:
-    """Initizalize the Argument Parser"""
+    """Initialize the Argument Parser"""
     parser = argparse.ArgumentParser(description='finds a random quote')
     parser.add_argument("--save", action="store_true", help="save the quote to file")
     args = parser.parse_args()
