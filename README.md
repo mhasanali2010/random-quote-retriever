@@ -2,7 +2,7 @@
 ## By mhasanali2010
 
 ## What it does?
-- Uses `zenquotes.io/api` to retrieve a random quote. Can optionally save the quote in `./quotes.json`
+- Uses `zenquotes.io/api` to retrieve a random quote. Can optionally save the quote in `./quotes.json` if you like it
 - API handling using `requests` and argument parsing using `argparse`
 
 ## Setting up
