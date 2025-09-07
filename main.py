@@ -39,10 +39,6 @@ try:
         else:
             logging.error(f"Data Not Retrieved {response.status_code}")
             print("Data Not Retrieved")
-except Exception as e:
-    logging.error(f"Error Occured: {e}")
-    print("An error occured while retrieving, please try again later.")
-finally:
     if save:
         if os.path.exists("last_quote.json") and os.path.getsize("last_quote.json") > 0:
             with open("last_quote.json", "r") as f:
@@ -61,3 +57,6 @@ finally:
         else:
             logging.error("Error while saving: last quote was not found")
             print("Could not save quote as no quote was found.")
+except Exception as e:
+    logging.error(f"Error Occured: {e}")
+    print("An error occured while retrieving, please try again later.")
