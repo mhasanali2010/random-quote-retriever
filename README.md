@@ -12,7 +12,7 @@
     ```
 - Optional: Set up virtual environment:
     ```bash
-    python -m venv venv
+    python3 -m venv venv
     # for macOS/Linux
     source venv/bin/activate
     # for windows (cmd)
@@ -22,20 +22,22 @@
     ```bash
     python3 -m pip install requests
     ```
-- Navigate to the repository
+- Navigate to the repository:
+    ```
+    cd random-quote-retriever
+    ```
 
 ## Retrieving Quotes
-### Random Quote (without saving)
 Run the script using:
 ```
 python3 main.py
 ```
-### Random Quote (with saving)
-Run the script using:
+## Saving Quotes
+Run the script with --save:
 ```
 python3 main.py --save
 ```
-The quote will be saved in `./quotes.json`
+The last quote that was retrieved will be saved in `./quotes.json`
 
 ## Notes
 - Tested only using `Python 3.13`
