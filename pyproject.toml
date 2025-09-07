@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "random-quote-retriever"
-version = "0.1.1"
+version = "0.1.2"
 description = "A simple CLI tool to fetch random quotes from ZenQuotes API"
 authors = [
   { name = "Muhammad Hasan", email = "mhasanali210@google.com" }
