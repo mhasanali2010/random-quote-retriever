@@ -20,7 +20,7 @@
     ```
 - Install requests:
     ```bash
-    python3 -m pip install requests
+    python3 -m pip install -r requirements.txt
     ```
 - Navigate to the repository:
     ```
@@ -41,4 +41,4 @@ The last quote that was retrieved will be saved in `./quotes.json`
 
 ## Notes
 - Tested only using `Python 3.13`
-- `requests` library is required for this to work.
+- Requirements are written in `./requirements.txt`
